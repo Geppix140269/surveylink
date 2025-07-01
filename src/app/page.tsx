@@ -3,14 +3,79 @@
 import { useState, useEffect } from 'react'
 import { Search, MapPin, Star, Shield, Users, TrendingUp, CheckCircle, Globe, Menu, X, ArrowRight } from 'lucide-react'
 
+type Language = 'it' | 'en'
+
+interface Translations {
+  it: {
+    platform: string
+    findSurveyors: string
+    prices: string
+    login: string
+    becomePartner: string
+    tagline: string
+    heroTitle1: string
+    heroTitle2: string
+    heroTitle3: string
+    heroSubtitle: string
+    searchPlaceholder: string
+    searchButton: string
+    verified: string
+    secure: string
+    reviews: string
+    verifiedSurveyors: string
+    completedSurveys: string
+    monthlyVolume: string
+    howItWorks: string
+    step1Title: string
+    step1Desc: string
+    step2Title: string
+    step2Desc: string
+    step3Title: string
+    step3Desc: string
+    ctaTitle: string
+    ctaSubtitle: string
+    ctaButton: string
+  }
+  en: {
+    platform: string
+    findSurveyors: string
+    prices: string
+    login: string
+    becomePartner: string
+    tagline: string
+    heroTitle1: string
+    heroTitle2: string
+    heroTitle3: string
+    heroSubtitle: string
+    searchPlaceholder: string
+    searchButton: string
+    verified: string
+    secure: string
+    reviews: string
+    verifiedSurveyors: string
+    completedSurveys: string
+    monthlyVolume: string
+    howItWorks: string
+    step1Title: string
+    step1Desc: string
+    step2Title: string
+    step2Desc: string
+    step3Title: string
+    step3Desc: string
+    ctaTitle: string
+    ctaSubtitle: string
+    ctaButton: string
+  }
+}
+
 export default function Home() {
   const [searchCity, setSearchCity] = useState('')
   const [showMobileMenu, setShowMobileMenu] = useState(false)
-  const [language, setLanguage] = useState('it')
+  const [language, setLanguage] = useState<Language>('it')
   const [animatedStats, setAnimatedStats] = useState({ surveyors: 0, transactions: 0, revenue: 0 })
 
   // Translations
-  const t = {
+  const t: Translations = {
     it: {
       platform: 'Come Funziona',
       findSurveyors: 'Trova Periti',
@@ -73,6 +138,8 @@ export default function Home() {
     }
   }
 
+  const currentLang = t[language]
+
   // Animate stats on load
   useEffect(() => {
     const targets = { surveyors: 250, transactions: 1250, revenue: 180000 }
@@ -114,25 +181,25 @@ export default function Home() {
             
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-emerald-600">{t[language].platform}</a>
-              <a href="#surveyors" className="text-gray-700 hover:text-emerald-600">{t[language].findSurveyors}</a>
-              <a href="#" className="text-gray-700 hover:text-emerald-600">{t[language].prices}</a>
+              <a href="#" className="text-gray-700 hover:text-emerald-600">{currentLang.platform}</a>
+              <a href="#surveyors" className="text-gray-700 hover:text-emerald-600">{currentLang.findSurveyors}</a>
+              <a href="#" className="text-gray-700 hover:text-emerald-600">{currentLang.prices}</a>
             </nav>
 
             <div className="hidden md:flex items-center space-x-4">
               {/* Language Switcher */}
               <select 
                 value={language} 
-                onChange={(e) => setLanguage(e.target.value)}
+                onChange={(e) => setLanguage(e.target.value as Language)}
                 className="bg-gray-100 border border-gray-300 rounded-md px-3 py-1 text-sm"
               >
                 <option value="it">🇮🇹 Italiano</option>
                 <option value="en">🇬🇧 English</option>
               </select>
               
-              <a href="/auth/login" className="text-gray-700 hover:text-emerald-600">{t[language].login}</a>
+              <a href="/auth/login" className="text-gray-700 hover:text-emerald-600">{currentLang.login}</a>
               <a href="/auth/register" className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors">
-                {t[language].becomePartner}
+                {currentLang.becomePartner}
               </a>
             </div>
 
@@ -152,18 +219,18 @@ export default function Home() {
             <div className="px-2 pt-2 pb-3 space-y-1">
               <select 
                 value={language} 
-                onChange={(e) => setLanguage(e.target.value)}
+                onChange={(e) => setLanguage(e.target.value as Language)}
                 className="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-2"
               >
                 <option value="it">🇮🇹 Italiano</option>
                 <option value="en">🇬🇧 English</option>
               </select>
-              <a href="#" className="block px-3 py-2 text-gray-700 hover:bg-gray-50">{t[language].platform}</a>
-              <a href="#surveyors" className="block px-3 py-2 text-gray-700 hover:bg-gray-50">{t[language].findSurveyors}</a>
-              <a href="#" className="block px-3 py-2 text-gray-700 hover:bg-gray-50">{t[language].prices}</a>
-              <a href="/auth/login" className="block px-3 py-2 text-gray-700 hover:bg-gray-50">{t[language].login}</a>
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:bg-gray-50">{currentLang.platform}</a>
+              <a href="#surveyors" className="block px-3 py-2 text-gray-700 hover:bg-gray-50">{currentLang.findSurveyors}</a>
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:bg-gray-50">{currentLang.prices}</a>
+              <a href="/auth/login" className="block px-3 py-2 text-gray-700 hover:bg-gray-50">{currentLang.login}</a>
               <a href="/auth/register" className="block px-3 py-2 bg-emerald-600 text-white rounded-lg">
-                {t[language].becomePartner}
+                {currentLang.becomePartner}
               </a>
             </div>
           </div>
@@ -176,15 +243,15 @@ export default function Home() {
           <div className="text-center">
             <div className="inline-flex items-center bg-emerald-100 text-emerald-800 rounded-full px-4 py-2 text-sm font-medium mb-6">
               <span className="animate-pulse mr-2">🚀</span>
-              {t[language].tagline}
+              {currentLang.tagline}
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              {t[language].heroTitle1} <span className="text-emerald-600">{t[language].heroTitle2}</span>
-              <br />{t[language].heroTitle3}
+              {currentLang.heroTitle1} <span className="text-emerald-600">{currentLang.heroTitle2}</span>
+              <br />{currentLang.heroTitle3}
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              {t[language].heroSubtitle}
+              {currentLang.heroSubtitle}
             </p>
 
             {/* Search Bar */}
@@ -194,7 +261,7 @@ export default function Home() {
                   <MapPin className="h-5 w-5 text-gray-400 mr-2" />
                   <input
                     type="text"
-                    placeholder={t[language].searchPlaceholder}
+                    placeholder={currentLang.searchPlaceholder}
                     value={searchCity}
                     onChange={(e) => setSearchCity(e.target.value)}
                     className="w-full py-3 outline-none"
@@ -202,7 +269,7 @@ export default function Home() {
                 </div>
                 <button className="bg-emerald-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center">
                   <Search className="h-5 w-5 mr-2" />
-                  {t[language].searchButton}
+                  {currentLang.searchButton}
                 </button>
               </div>
             </div>
@@ -211,15 +278,15 @@ export default function Home() {
             <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-gray-600">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />
-                {t[language].verified}
+                {currentLang.verified}
               </div>
               <div className="flex items-center">
                 <Shield className="h-5 w-5 text-emerald-500 mr-2" />
-                {t[language].secure}
+                {currentLang.secure}
               </div>
               <div className="flex items-center">
                 <Star className="h-5 w-5 text-emerald-500 mr-2" />
-                {t[language].reviews}
+                {currentLang.reviews}
               </div>
             </div>
           </div>
@@ -234,19 +301,19 @@ export default function Home() {
               <div className="text-4xl font-bold text-emerald-600 mb-2">
                 {animatedStats.surveyors}+
               </div>
-              <div className="text-gray-600">{t[language].verifiedSurveyors}</div>
+              <div className="text-gray-600">{currentLang.verifiedSurveyors}</div>
             </div>
             <div className="p-6">
               <div className="text-4xl font-bold text-teal-600 mb-2">
                 {animatedStats.transactions.toLocaleString()}+
               </div>
-              <div className="text-gray-600">{t[language].completedSurveys}</div>
+              <div className="text-gray-600">{currentLang.completedSurveys}</div>
             </div>
             <div className="p-6">
               <div className="text-4xl font-bold text-amber-600 mb-2">
                 €{animatedStats.revenue.toLocaleString()}
               </div>
-              <div className="text-gray-600">{t[language].monthlyVolume}</div>
+              <div className="text-gray-600">{currentLang.monthlyVolume}</div>
             </div>
           </div>
         </div>
@@ -255,28 +322,28 @@ export default function Home() {
       {/* How it Works */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">{t[language].howItWorks}</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">{currentLang.howItWorks}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Search className="h-8 w-8 text-emerald-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{t[language].step1Title}</h3>
-              <p className="text-gray-600">{t[language].step1Desc}</p>
+              <h3 className="text-xl font-semibold mb-2">{currentLang.step1Title}</h3>
+              <p className="text-gray-600">{currentLang.step1Desc}</p>
             </div>
             <div className="text-center">
               <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="h-8 w-8 text-emerald-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{t[language].step2Title}</h3>
-              <p className="text-gray-600">{t[language].step2Desc}</p>
+              <h3 className="text-xl font-semibold mb-2">{currentLang.step2Title}</h3>
+              <p className="text-gray-600">{currentLang.step2Desc}</p>
             </div>
             <div className="text-center">
               <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="h-8 w-8 text-emerald-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{t[language].step3Title}</h3>
-              <p className="text-gray-600">{t[language].step3Desc}</p>
+              <h3 className="text-xl font-semibold mb-2">{currentLang.step3Title}</h3>
+              <p className="text-gray-600">{currentLang.step3Desc}</p>
             </div>
           </div>
         </div>
@@ -286,16 +353,16 @@ export default function Home() {
       <section className="py-20 bg-emerald-600">
         <div className="max-w-4xl mx-auto text-center px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            {t[language].ctaTitle}
+            {currentLang.ctaTitle}
           </h2>
           <p className="text-xl text-emerald-100 mb-8">
-            {t[language].ctaSubtitle}
+            {currentLang.ctaSubtitle}
           </p>
           <a
             href="/auth/register"
             className="inline-flex items-center bg-white text-emerald-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
           >
-            {t[language].ctaButton}
+            {currentLang.ctaButton}
             <ArrowRight className="ml-2 h-5 w-5" />
           </a>
         </div>
