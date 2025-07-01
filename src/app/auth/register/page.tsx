@@ -5,6 +5,7 @@ import { Globe, ArrowLeft } from 'lucide-react'
 
 export default function Register() {
   const [loading, setLoading] = useState(false)
+  const [language, setLanguage] = useState('it')
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,30 +20,103 @@ export default function Register() {
     specializations: [] as string[]
   })
 
+  const t = {
+    it: {
+      title: 'Diventa Partner SurveyLink',
+      subtitle: 'Unisciti alla rete esclusiva di periti professionisti',
+      backToSite: 'Torna al sito',
+      email: 'Email',
+      password: 'Password',
+      fullName: 'Nome Completo',
+      phone: 'Telefono',
+      professionalTitle: 'Titolo Professionale',
+      licenseNumber: 'Numero Iscrizione Albo',
+      yearsExperience: 'Anni di Esperienza',
+      city: 'Città',
+      region: 'Regione',
+      baseRate: 'Tariffa Base (€)',
+      specializations: 'Specializzazioni',
+      select: 'Seleziona...',
+      submit: 'Completa Registrazione',
+      submitting: 'Registrazione in corso...',
+      geometra: 'Geometra',
+      ingegnere: 'Ingegnere',
+      architetto: 'Architetto',
+      perito: 'Perito'
+    },
+    en: {
+      title: 'Become a SurveyLink Partner',
+      subtitle: 'Join the exclusive network of professional surveyors',
+      backToSite: 'Back to site',
+      email: 'Email',
+      password: 'Password',
+      fullName: 'Full Name',
+      phone: 'Phone',
+      professionalTitle: 'Professional Title',
+      licenseNumber: 'License Number',
+      yearsExperience: 'Years of Experience',
+      city: 'City',
+      region: 'Region',
+      baseRate: 'Base Rate (€)',
+      specializations: 'Specializations',
+      select: 'Select...',
+      submit: 'Complete Registration',
+      submitting: 'Registering...',
+      geometra: 'Surveyor',
+      ingegnere: 'Engineer',
+      architetto: 'Architect',
+      perito: 'Expert'
+    }
+  }
+
+  const currentLang = language === 'it' ? t.it : t.en
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     
-    // For now, just show success message
-    // Will connect to Supabase later
+    // Store language preference
+    localStorage.setItem('language', language)
+    
+    // For now, simulate registration success
+    // In production, you would:
+    // 1. Create user in Supabase
+    // 2. Send email via EmailJS
+    // 3. Handle errors
+    
     setTimeout(() => {
-      alert('Registrazione completata! Ti contatteremo presto.')
-      setLoading(false)
-      window.location.href = '/'
-    }, 1000)
+      // Store registration data for thank you page
+      localStorage.setItem('registrationData', JSON.stringify({
+        fullName: formData.fullName,
+        email: formData.email,
+        language: language
+      }))
+      
+      // Redirect to thank you page
+      window.location.href = '/auth/thank-you'
+    }, 1500)
   }
 
-  const specializations = [
-    'Residenziale', 'Commerciale', 'Industriale', 
-    'Perizie Strutturali', 'Certificazione Energetica', 
-    'Due Diligence', 'Valutazioni Immobiliari'
-  ]
+  const specializationsList = {
+    it: [
+      'Residenziale', 'Commerciale', 'Industriale', 
+      'Perizie Strutturali', 'Certificazione Energetica', 
+      'Due Diligence', 'Valutazioni Immobiliari'
+    ],
+    en: [
+      'Residential', 'Commercial', 'Industrial',
+      'Structural Surveys', 'Energy Certification',
+      'Due Diligence', 'Property Valuations'
+    ]
+  }
 
   const regions = [
     'Lombardia', 'Lazio', 'Campania', 'Sicilia', 'Veneto', 
     'Piemonte', 'Emilia-Romagna', 'Toscana', 'Puglia', 
     'Liguria', 'Calabria', 'Marche', 'Abruzzo', 'Sardegna'
   ]
+
+  const currentSpecializations = language === 'it' ? specializationsList.it : specializationsList.en
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50">
@@ -53,20 +127,30 @@ export default function Register() {
             <Globe className="h-8 w-8 text-emerald-600 mr-2" />
             <span className="text-2xl font-bold text-emerald-600">SurveyLink</span>
           </a>
-          <a href="/" className="flex items-center text-gray-600 hover:text-gray-900">
-            <ArrowLeft className="h-5 w-5 mr-1" />
-            Torna al sito
-          </a>
+          <div className="flex items-center space-x-4">
+            <select 
+              value={language} 
+              onChange={(e) => setLanguage(e.target.value)}
+              className="bg-gray-100 border border-gray-300 rounded-md px-3 py-1 text-sm"
+            >
+              <option value="it">🇮🇹 Italiano</option>
+              <option value="en">🇬🇧 English</option>
+            </select>
+            <a href="/" className="flex items-center text-gray-600 hover:text-gray-900">
+              <ArrowLeft className="h-5 w-5 mr-1" />
+              {currentLang.backToSite}
+            </a>
+          </div>
         </div>
       </header>
 
       <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <h1 className="text-3xl font-bold text-center mb-2">
-            Diventa Partner SurveyLink
+            {currentLang.title}
           </h1>
           <p className="text-gray-600 text-center mb-8">
-            Unisciti alla rete esclusiva di periti professionisti
+            {currentLang.subtitle}
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -74,7 +158,7 @@ export default function Register() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email *
+                  {currentLang.email} *
                 </label>
                 <input
                   type="email"
@@ -86,7 +170,7 @@ export default function Register() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Password *
+                  {currentLang.password} *
                 </label>
                 <input
                   type="password"
@@ -103,7 +187,7 @@ export default function Register() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nome Completo *
+                  {currentLang.fullName} *
                 </label>
                 <input
                   type="text"
@@ -115,7 +199,7 @@ export default function Register() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Telefono *
+                  {currentLang.phone} *
                 </label>
                 <input
                   type="tel"
@@ -131,7 +215,7 @@ export default function Register() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Titolo Professionale *
+                  {currentLang.professionalTitle} *
                 </label>
                 <select
                   required
@@ -139,16 +223,16 @@ export default function Register() {
                   onChange={(e) => setFormData({...formData, professionalTitle: e.target.value})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500"
                 >
-                  <option value="">Seleziona...</option>
-                  <option value="Geometra">Geometra</option>
-                  <option value="Ingegnere">Ingegnere</option>
-                  <option value="Architetto">Architetto</option>
-                  <option value="Perito">Perito</option>
+                  <option value="">{currentLang.select}</option>
+                  <option value="Geometra">{currentLang.geometra}</option>
+                  <option value="Ingegnere">{currentLang.ingegnere}</option>
+                  <option value="Architetto">{currentLang.architetto}</option>
+                  <option value="Perito">{currentLang.perito}</option>
                 </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Numero Iscrizione Albo *
+                  {currentLang.licenseNumber} *
                 </label>
                 <input
                   type="text"
@@ -163,7 +247,7 @@ export default function Register() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Anni di Esperienza *
+                  {currentLang.yearsExperience} *
                 </label>
                 <input
                   type="number"
@@ -176,7 +260,7 @@ export default function Register() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Tariffa Base (€) *
+                  {currentLang.baseRate} *
                 </label>
                 <input
                   type="number"
@@ -194,7 +278,7 @@ export default function Register() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Regione *
+                  {currentLang.region} *
                 </label>
                 <select
                   required
@@ -202,13 +286,13 @@ export default function Register() {
                   onChange={(e) => setFormData({...formData, region: e.target.value})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500"
                 >
-                  <option value="">Seleziona...</option>
+                  <option value="">{currentLang.select}</option>
                   {regions.map(r => <option key={r} value={r}>{r}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Città *
+                  {currentLang.city} *
                 </label>
                 <input
                   type="text"
@@ -223,10 +307,10 @@ export default function Register() {
             {/* Specializations */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Specializzazioni
+                {currentLang.specializations}
               </label>
               <div className="grid grid-cols-2 gap-2">
-                {specializations.map((spec) => (
+                {currentSpecializations.map((spec) => (
                   <label key={spec} className="flex items-center">
                     <input
                       type="checkbox"
@@ -262,7 +346,7 @@ export default function Register() {
                   : 'bg-emerald-600 text-white hover:bg-emerald-700'
               }`}
             >
-              {loading ? 'Registrazione in corso...' : 'Completa Registrazione'}
+              {loading ? currentLang.submitting : currentLang.submit}
             </button>
           </form>
         </div>
