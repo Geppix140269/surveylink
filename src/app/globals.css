@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+/* Ensure all elements are visible */
+* {
+  box-sizing: border-box;
+}
+
+/* Fix for header elements */
+header select {
+  min-width: 120px;
+  z-index: 50;
+}
+
+/* Ensure proper spacing */
+.bg-pattern {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
