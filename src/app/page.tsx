@@ -9,7 +9,12 @@ export default function Home() {
   const [searchCity, setSearchCity] = useState('')
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [language, setLanguage] = useState<Language>('it')
-  const [animatedStats, setAnimatedStats] = useState({ surveyors: 0, transactions: 0, revenue: 0, satisfaction: 0 })
+  const [animatedStats, setAnimatedStats] = useState({ 
+    surveyors: 0, 
+    transactions: 0, 
+    satisfaction: 0, 
+    cities: 0  // Added this property
+  })
 
   // Translations
   const t = {
@@ -615,7 +620,7 @@ export default function Home() {
               </div>
             </div>
             <div className="flex-shrink-0">
-              <a
+              
                 href="/auth/register"
                 className="inline-flex items-center bg-emerald-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-emerald-700 transition-all"
               >
