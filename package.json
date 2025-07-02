@@ -15,7 +15,8 @@
     "@supabase/supabase-js": "^2.38.4",
     "@supabase/ssr": "^0.0.10",
     "lucide-react": "^0.294.0",
-    "@emailjs/browser": "^3.11.0"
+    "@emailjs/browser": "^3.11.0",
+    "resend": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
